@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #212121;">
+    <div class="card"></div>
+    <button>click me</button>
+</body>
+<script>
+    const card = document.querySelector('.card')
+    const button = document.querySelector('button')
+
+    const url = 'https://api.github.com/users/hiteshchoudhary'
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url)
+    xhr.onreadystatechange = function (){
+        if(xhr.readyState == 4){
+            const result = JSON.parse(this.responseText)
+            button.addEventListener('click', cardMaker)
+            function cardMaker(){
+                card.style.backgroundColor = 'white'
+                card.style.height = '250px'
+                card.style.width = '250px'
+
+                const img = document.createElement('img')
+                img.src = result.avatar_url
+                img.style.height = '200px'
+                img.style.width = '250px'
+                
+                const p = document.createElement('p')
+                p.innerText = `followers: ${result.followers}`
+                p.style.paddingLeft = '25%'
+                
+                card.appendChild(img)
+                card.appendChild(p)
+            }
+        }
+    }
+    xhr.send()
+</script>
+</html>
